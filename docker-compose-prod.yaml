@@ -1,0 +1,173 @@
+version: "3.8"
+services:
+  ethereum:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - ethereum/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=ethereum_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-ethereum
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - ethereum-db:/app/db
+    networks:
+      - default
+  polygon:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - polygon/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=polygon_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-polygon
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - polygon-db:/app/db
+    networks:
+      - default
+  optimism:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - optimism/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=optimism_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-optimism
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - optimism-db:/app/db
+    networks:
+      - default
+  celo:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - celo/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=celo_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-celo
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - celo-db:/app/db
+    networks:
+      - default
+  bsc:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - bsc/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=bsc_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-bsc
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - bsc-db:/app/db
+    networks:
+      - default
+  avalanche:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - avalanche/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=avalanche_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-avalanche
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - avalanche-db:/app/db
+    networks:
+      - default
+  arbitrum:
+    image: gcr.io/abacus-labs-dev/abacus-agent:sha-90f1885
+    user: $UID:$GID
+    command:
+      - ./validator
+    env_file:
+      - arbitrum/.env
+    environment:
+      - RUN_ENV=mainnet
+      - BASE_CONFIG=arbitrum_config.json
+      - ABC_VALIDATOR_VALIDATOR_ID=alias/abacus-validator-signer-arbitrum
+      - ABC_VALIDATOR_REORGPERIOD=256
+      - ABC_VALIDATOR_INTERVAL=15
+      - ABC_BASE_VALIDATOR_TYPE=aws
+      - ABC_VALIDATOR_CHECKPOINTSYNCER_TYPE=s3
+      - ABC_BASE_METRICS=9090
+      - ABC_BASE_TRACING_LEVEL=info
+      - ABC_VALIDATOR_DB=/app/db
+      - ABC_BASE_DB=/app/db
+    volumes:
+      - arbitrum-db:/app/db
+    networks:
+      - default
+networks:
+  default:
+volumes:
+  ethereum-db:
+  polygon-db:
+  optimism-db:
+  celo-db:
+  bsc-db:
+  avalanche-db:
+  arbitrum-db:
