@@ -8,6 +8,5 @@ services:
     volumes:
       - ./$CHAIN/.env:/.env
       - ./get-aws-kms-address:/get-aws-kms-address
-    command: ts-node index.ts
     tty: true
     working_dir: /get-aws-kms-address
