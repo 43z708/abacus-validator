@@ -2,16 +2,6 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: 
   Definitions of S3 and IAM User
 
-Mappings:
-  TagsMap:
-    TagName:
-#[ "prod", "stg", "dev" ] 本番、検証、開発
-      environment: prod
-      usageFront: frontend
-      usageBack: backend
-      usageDb: database
-      usageDevOps: dbops
-
 # ------------------------------------------------------------#
 # Input Parameters
 # ------------------------------------------------------------#
@@ -20,7 +10,7 @@ Parameters:
     Default: ethereum
     Type: String
   ValidatorName:
-    Default: "admin"
+    Default: "yourname"
     Type: String
     MinLength: 1
     MaxLength: 16
