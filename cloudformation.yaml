@@ -1,155 +1,162 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: 
-  Definitions of S3 and IAM User
+Description: Definitions of S3 and IAM User
 
 # ------------------------------------------------------------#
 # Input Parameters
 # ------------------------------------------------------------#
 Parameters:
-  Chain:
-    Default: ethereum
-    Type: String
-  ValidatorName:
-    Default: "yourname"
-    Type: String
-    MinLength: 1
-    MaxLength: 16
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription: "must begin with a letter and contain only alphanumeric characters."
+    Chain:
+        Default: ethereum
+        Type: String
+    ValidatorName:
+        Default: "yourname"
+        Type: String
+        AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+        ConstraintDescription: "must begin with a letter and contain only alphanumeric characters."
 
 Resources:
-# ------------------------------------------------------------#
-#  IAM
-# ------------------------------------------------------------#
-  IAMUser:
-    Type: AWS::IAM::User
-    Properties:
-      UserName: !Sub "abacus-validator-${Chain}"
-      Tags:
-        - Key: "Chain"
-          Value: !Ref chain
-        - Key: "Name"
-          Value: !Sub "abacus-validator-${Chain}"
+    # ------------------------------------------------------------#
+    #  IAM
+    # ------------------------------------------------------------#
+    IAMUser:
+        Type: AWS::IAM::User
+        Properties:
+            UserName: !Sub "abacus-validator-${Chain}"
+            Tags:
+                - Key: "Chain"
+                  Value: !Ref Chain
+                - Key: "Name"
+                  Value: !Sub "abacus-validator-${Chain}"
 
+    IAMUserAccessKey:
+        Type: AWS::IAM::AccessKey
+        DependsOn:
+            - IAMUser
+        Properties:
+            UserName: !Sub "abacus-validator-${Chain}"
+    # ------------------------------------------------------------#
+    #  KMS
+    # ------------------------------------------------------------#
+    # Alias
+    myAlias:
+        Type: "AWS::KMS::Alias"
+        Properties:
+            AliasName: !Sub alias/abacus-validator-signer-${Chain}
+            TargetKeyId: !Ref myKey
 
-  IAMUserAccessKey:
-    Type: AWS::IAM::AccessKey
-    DependsOn:
-      - AppUser
-    Properties: 
-      UserName: !Sub "abacus-validator-${Chain}"
-# ------------------------------------------------------------#
-#  KMS
-# ------------------------------------------------------------#
-# Alias
-  myAlias:
-    Type: 'AWS::KMS::Alias'
-    Properties:
-      AliasName: !Sub alias/abacus-validator-signer-${Chain}
-      TargetKeyId: !Ref myKey
+    # Key
+    myKey:
+        Type: "AWS::KMS::Key"
+        Properties:
+            Description: ECC_SECG_P256K1 asymmetric KMS key for signing and verification
+            KeySpec: ECC_SECG_P256K1
+            KeyUsage: SIGN_VERIFY
+            KeyPolicy:
+                Version: 2012-10-17
+                Id: key-consolepolicy-3
+                Statement:
+                    - Sid: Enable IAM User Permissions
+                      Effect: Allow
+                      Principal:
+                          AWS: !Join ['', ['{{arn:aws:iam::', !Ref AWS::StackId, ':root}}' ]]
+                      Action: "kms:*"
+                      Resource: "*"
+                    - Sid: Allow use of the key
+                      Effect: Allow
+                      Principal:
+                          AWS: !GetAtt IAMUser.Arn
+                      Action:
+                          - "kms:GetPublicKey"
+                          - "kms:Sign"
+                      Resource: "*"
 
-# Key
-  myKey:
-    Type: 'AWS::KMS::Key'
-    Properties:
-      Description: ECC_SECG_P256K1 asymmetric KMS key for signing and verification
-      KeySpec: ECC_SECG_P256K1
-      KeyUsage: SIGN_VERIFY
-      KeyPolicy:
-        Version: 2012-10-17
-        Id: key-consolepolicy-3
-        Statement:
-          - Sid: Enable IAM User Permissions
-            Effect: Allow
-            Principal:
-              AWS: !GetAtt IAMUser.Arn
-            Action: 'kms:*'
-            Resource: '*'
-          - Sid: Allow use of the key
-            Effect: Allow
-            Principal:
-              AWS: !GetAtt IAMUser.Arn
-            Action:
-              - 'kms:GetPublicKey'
-              - 'kms:Sign'
-            Resource: '*'
+    # ------------------------------------------------------------#
+    #  S3
+    # ------------------------------------------------------------#
+    # S3 Bucket
 
-# ------------------------------------------------------------#
-#  S3
-# ------------------------------------------------------------#
-# S3 Bucket
+    S3Bucket:
+        Type: "AWS::S3::Bucket"
+        DeletionPolicy: "Retain"
+        Properties:
+            BucketName: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}"
+            OwnershipControls:
+                Rules:
+                    - ObjectOwnership: BucketOwnerEnforced
+            PublicAccessBlockConfiguration:
+                BlockPublicAcls: True
+                IgnorePublicAcls: True
+            Tags:
+                - Key: "Chain"
+                  Value: !Ref Chain
+                - Key: "Name"
+                  Value: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}"
 
-  S3:
-    Type: "AWS::S3::Bucket"
-    DeletionPolicy: "Retain"
-    Properties:
-      BucketName: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}"
-      PublicAccessBlockConfiguration: 
-        BlockPublicAcls: True
-        BlockPublicPolicy: True
-      Tags:
-        - Key: "Chain"
-          Value: !Ref chain
-        - Key: "Name"
-          Value: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}"
-
-# S3 Bucket Policy
-  S3Policy:
-    Type: AWS::S3::BucketPolicy
-    Properties: 
-      Bucket: !Ref "S3"
-      PolicyDocument:
-        "Version": "2012-10-17"
-        "Statement":
-          "Effect": "Allow"
-          "Principal": "*"
-          "Action": 
-            - "s3:GetObject"
-            - "s3:ListBucket"
-          "Resource":
-            - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}"
-            - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}/*"
+    # S3 Bucket Policy
+    S3Policy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket: !Ref S3Bucket
+            PolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                    - Effect: "Allow"
+                      Principal: "*"
+                      Action:
+                          - "s3:GetObject"
+                          - "s3:ListBucket"
+                      Resource:
+                          - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}"
+                          - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}/*"
+                    - Effect: "Allow"
+                      Principal:
+                          AWS: !GetAtt IAMUser.Arn
+                      Action:
+                          - "s3:DeleteObject"
+                          - "s3:PutObject"
+                      Resource:
+                          - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}/*"
 
 # ------------------------------------------------------------#
 # Output Parameters
-# ------------------------------------------------------------#                
+# ------------------------------------------------------------#
 Outputs:
-  IAMUserAccessKeyId:
-    Value: !Ref IAMUserAccessKey
-    Export:
-      Name: "AWS_ACCESS_KEY_ID"
+    IAMUserAccessKeyId:
+        Value: !Ref IAMUserAccessKey
+        Export:
+            Name: "AWS-ACCESS-KEY-ID"
 
-  IAMUserSecretAccessKey:
-    Value: !GetAtt IAMUserAccessKey.SecretAccessKey
-    Export:
-      Name: "AWS_SECRET_ACCESS_KEY"
+    IAMUserSecretAccessKey:
+        Value: !GetAtt IAMUserAccessKey.SecretAccessKey
+        Export:
+            Name: "AWS-SECRET-ACCESS-KEY"
 
-  KmsKeyId:
-    Value: !Ref myKey
-    Export:
-      Name: "KMS_KEY_ID"
+    KmsKeyId:
+        Value: !Ref myKey
+        Export:
+            Name: "KMS-KEY-ID"
 
-  ValidatorName:
-    Value: !Ref ValidatorName
-    Export:
-      Name: "VALIDATOR_NAME"
+    ValidatorName:
+        Value: !Ref ValidatorName
+        Export:
+            Name: "VALIDATOR-NAME"
 
-  AbcValidatorCheckpointsyncerBucket:
-    Value: !Ref S3
-    Export:
-      Name: "ABC_VALIDATOR_CHECKPOINTSYNCER_BUCKET"
+    AbcValidatorCheckpointsyncerBucket:
+        Value: !Ref S3Bucket
+        Export:
+            Name: "ABC-VALIDATOR-CHECKPOINTSYNCER-BUCKET"
 
-  AbcValidatorRegion:
-    Value: !Ref AWS::Region
-    Export:
-      Name: "ABC_VALIDATOR_REGION"
+    AbcValidatorRegion:
+        Value: !Ref AWS::Region
+        Export:
+            Name: "ABC-VALIDATOR-REGION"
 
-  AbcValidatorCheckpointsyncerRegion:
-    Value: !Ref AWS::Region
-    Export:
-      Name: "ABC_VALIDATOR_CHECKPOINTSYNCER_REGION"
+    AbcValidatorCheckpointsyncerRegion:
+        Value: !Ref AWS::Region
+        Export:
+            Name: "ABC-VALIDATOR-CHECKPOINTSYNCER-REGION"
 
-  AbcBaseValidatorRegion:
-    Value: !Ref AWS::Region
-    Export:
-      Name: "ABC_BASE_VALIDATOR_REGION"
+    AbcBaseValidatorRegion:
+        Value: !Ref AWS::Region
+        Export:
+            Name: "ABC-BASE-VALIDATOR-REGION"
