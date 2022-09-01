@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+    kms:
+        build:
+            context: ./
+            dockerfile: ./docker/kms/Dockerfile
+        container_name: "kms"
+        volumes:
+            - ./chain/$CHAIN/.env:/.env
+            - ./get-aws-kms-address:/get-aws-kms-address
+        tty: true
+        working_dir: /get-aws-kms-address
+    aws-cli:
+        container_name: "aws-cli"
+        build:
+            context: ./
+            dockerfile: ./docker/aws-cli/Dockerfile
+        tty: true
+        env_file:
+            - .env
+        volumes:
+            - ./cloudformation.yaml:/src/cloudformation.yaml
+        environment:
+            AWS_DEFAULT_OUTPUT: json

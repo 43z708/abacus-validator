@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Definitions of S3 and IAM User
+Description: Definitions of S3, IAM User and KMS
 
 # ------------------------------------------------------------#
 # Input Parameters
@@ -128,39 +128,39 @@ Outputs:
     IAMUserAccessKeyId:
         Value: !Ref IAMUserAccessKey
         Export:
-            Name: "AWS-ACCESS-KEY-ID"
+            Name: !Sub "${Chain}-AWS-ACCESS-KEY-ID"
 
     IAMUserSecretAccessKey:
         Value: !GetAtt IAMUserAccessKey.SecretAccessKey
         Export:
-            Name: "AWS-SECRET-ACCESS-KEY"
+            Name: !Sub "${Chain}-AWS-SECRET-ACCESS-KEY"
 
     KmsKeyId:
         Value: !Ref myKey
         Export:
-            Name: "KMS-KEY-ID"
+            Name: !Sub "${Chain}-KMS-KEY-ID"
 
     ValidatorName:
         Value: !Ref ValidatorName
         Export:
-            Name: "VALIDATOR-NAME"
+            Name: !Sub "${Chain}-VALIDATOR-NAME"
 
     AbcValidatorCheckpointsyncerBucket:
         Value: !Ref myS3Bucket
         Export:
-            Name: "ABC-VALIDATOR-CHECKPOINTSYNCER-BUCKET"
+            Name: !Sub "${Chain}-ABC-VALIDATOR-CHECKPOINTSYNCER-BUCKET"
 
     AbcValidatorRegion:
         Value: !Ref AWS::Region
         Export:
-            Name: "ABC-VALIDATOR-REGION"
+            Name: !Sub "${Chain}-ABC-VALIDATOR-REGION"
 
     AbcValidatorCheckpointsyncerRegion:
         Value: !Ref AWS::Region
         Export:
-            Name: "ABC-VALIDATOR-CHECKPOINTSYNCER-REGION"
+            Name: !Sub "${Chain}-ABC-VALIDATOR-CHECKPOINTSYNCER-REGION"
 
     AbcBaseValidatorRegion:
         Value: !Ref AWS::Region
         Export:
-            Name: "ABC-BASE-VALIDATOR-REGION"
+            Name: !Sub "${Chain}-ABC-BASE-VALIDATOR-REGION"
