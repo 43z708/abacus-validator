@@ -47,18 +47,19 @@ Resources:
     # Key
     myKey:
         Type: "AWS::KMS::Key"
+        DependsOn: "IAMUser"
         Properties:
             Description: ECC_SECG_P256K1 asymmetric KMS key for signing and verification
             KeySpec: ECC_SECG_P256K1
             KeyUsage: SIGN_VERIFY
             KeyPolicy:
-                Version: 2012-10-17
-                Id: key-consolepolicy-3
+                Version: "2012-10-17"
+                Id: !Sub "key-policy-${Chain}"
                 Statement:
                     - Sid: Enable IAM User Permissions
                       Effect: Allow
                       Principal:
-                          AWS: !Join ['', ['{{arn:aws:iam::', !Ref AWS::StackId, ':root}}' ]]
+                          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
                       Action: "kms:*"
                       Resource: "*"
                     - Sid: Allow use of the key
@@ -69,15 +70,14 @@ Resources:
                           - "kms:GetPublicKey"
                           - "kms:Sign"
                       Resource: "*"
-
     # ------------------------------------------------------------#
     #  S3
     # ------------------------------------------------------------#
     # S3 Bucket
 
-    S3Bucket:
+    myS3Bucket:
         Type: "AWS::S3::Bucket"
-        DeletionPolicy: "Retain"
+        # DeletionPolicy: "Retain"
         Properties:
             BucketName: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}"
             OwnershipControls:
@@ -95,12 +95,15 @@ Resources:
     # S3 Bucket Policy
     S3Policy:
         Type: AWS::S3::BucketPolicy
+        DependsOn: "IAMUser"
         Properties:
-            Bucket: !Ref S3Bucket
+            Bucket: !Ref "myS3Bucket"
             PolicyDocument:
                 Version: "2012-10-17"
+                Id: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}-policy"
                 Statement:
-                    - Effect: "Allow"
+                    - Sid: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}-anyone"
+                      Effect: "Allow"
                       Principal: "*"
                       Action:
                           - "s3:GetObject"
@@ -108,7 +111,8 @@ Resources:
                       Resource:
                           - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}"
                           - !Sub "arn:aws:s3:::abacus-validator-signatures-${ValidatorName}-${Chain}/*"
-                    - Effect: "Allow"
+                    - Sid: !Sub "abacus-validator-signatures-${ValidatorName}-${Chain}-iam"
+                      Effect: "Allow"
                       Principal:
                           AWS: !GetAtt IAMUser.Arn
                       Action:
@@ -142,7 +146,7 @@ Outputs:
             Name: "VALIDATOR-NAME"
 
     AbcValidatorCheckpointsyncerBucket:
-        Value: !Ref S3Bucket
+        Value: !Ref myS3Bucket
         Export:
             Name: "ABC-VALIDATOR-CHECKPOINTSYNCER-BUCKET"
 
