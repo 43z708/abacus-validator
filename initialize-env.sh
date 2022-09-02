@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -e .exec-once ]; then
+if [ ! -e .exec-once ]; then
 touch .exec-once
 chains=(arbitrum avalanche bsc celo ethereum optimism polygon)
 
