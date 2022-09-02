@@ -148,7 +148,7 @@ chain=ethereum bash ./setenv.sh
 
 After executing this command, `abacus-validator/chain/<chain name>/.env` is created.
 
-#### 4. Set up "./abacus-validator/chain/<chain name>/.env" file
+#### 4. Set up `./abacus-validator/chain/<chain name>/.env` file
 
 1. **Get the rpc URL for each chain from a service such as Alchemy or infura.**
 
