@@ -8,5 +8,5 @@ RUN apt-get update && \
   sed -i 's/\r//g' /opt/startup.sh &&\
   yarn global add ts-node
 WORKDIR /get-aws-kms-address
-ENTRYPOINT ["/bin/bash", "/opt/startup.sh"]
+CMD ["/bin/bash", "/opt/startup.sh"]
 
