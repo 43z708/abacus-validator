@@ -126,6 +126,7 @@ aws cloudformation list-stacks \
 ```
 
 **Ref: Command to delete a stack.**
+**If you have already run validator once, delete the resource in the console before executing this command because the resource exists in the s3 bucket.**
 
 ```
 aws cloudformation delete-stack \
@@ -145,7 +146,7 @@ chain=<chain name> bash ./setenv.sh
 chain=ethereum bash ./setenv.sh
 ```
 
-After executing this command, abacus-validator/chain/<chain name>/.env is created.
+After executing this command, `abacus-validator/chain/<chain name>/.env` is created.
 
 #### 4. Set up "./abacus-validator/chain/<chain name>/.env" file
 
@@ -161,7 +162,7 @@ vim ./chain/ethereum/.env
 ```
 
 3. **Press the "i" key to switch to edit mode.**
-   Copy and paste the rpc URL obtained in 1) after ABC_BASE_OUTBOX_CONNECTION_URL=.
+   Copy and paste the rpc URL obtained in 1. after ABC_BASE_OUTBOX_CONNECTION_URL=.
 
 4. **After ABC_BASE_METRICS=, specify the port to be used for metrics.**
    The official recommendation is 9090, but if you are running multiple chains of validators on a single machine, set different ports so that the chains do not overlap.
