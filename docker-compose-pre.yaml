@@ -20,6 +20,6 @@ services:
         env_file:
             - .env
         volumes:
-            - ./cloudformation.yaml:/src/cloudformation.yaml
+            - .:/src/
         environment:
             AWS_DEFAULT_OUTPUT: json

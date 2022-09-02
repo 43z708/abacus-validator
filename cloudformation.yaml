@@ -125,42 +125,26 @@ Resources:
 # Output Parameters
 # ------------------------------------------------------------#
 Outputs:
-    IAMUserAccessKeyId:
+    AwsAccessKeyId:
         Value: !Ref IAMUserAccessKey
-        Export:
-            Name: !Sub "${Chain}-AWS-ACCESS-KEY-ID"
 
-    IAMUserSecretAccessKey:
+    AwsSecretAccessKey:
         Value: !GetAtt IAMUserAccessKey.SecretAccessKey
-        Export:
-            Name: !Sub "${Chain}-AWS-SECRET-ACCESS-KEY"
 
     KmsKeyId:
         Value: !Ref myKey
-        Export:
-            Name: !Sub "${Chain}-KMS-KEY-ID"
 
     ValidatorName:
         Value: !Ref ValidatorName
-        Export:
-            Name: !Sub "${Chain}-VALIDATOR-NAME"
 
     AbcValidatorCheckpointsyncerBucket:
         Value: !Ref myS3Bucket
-        Export:
-            Name: !Sub "${Chain}-ABC-VALIDATOR-CHECKPOINTSYNCER-BUCKET"
 
     AbcValidatorRegion:
         Value: !Ref AWS::Region
-        Export:
-            Name: !Sub "${Chain}-ABC-VALIDATOR-REGION"
 
     AbcValidatorCheckpointsyncerRegion:
         Value: !Ref AWS::Region
-        Export:
-            Name: !Sub "${Chain}-ABC-VALIDATOR-CHECKPOINTSYNCER-REGION"
 
     AbcBaseValidatorRegion:
         Value: !Ref AWS::Region
-        Export:
-            Name: !Sub "${Chain}-ABC-BASE-VALIDATOR-REGION"
