@@ -94,7 +94,7 @@ The region should be copied as shown below, selecting the region you wish to set
 (1) Launch a docker container running aws-cli with the following command and login to the container.
 
 ```
-docker-compose -f docker-compose-pre.yaml run --rm aws-cli bash
+docker compose -f docker-compose-pre.yaml run --rm aws-cli bash
 ```
 
 (2) Use cloudformation to create all the AWS resources needed for the validator at once, chain by chain.
@@ -167,7 +167,10 @@ Copy and paste the rpc URL obtained in 1) after ABC_BASE_OUTBOX_CONNECTION_URL=.
 
 (5) Press the "esc" key and use the ":wq" command to save and exit.
 
-[**Ref: This commando is a test for AWS resources(This outputs an Ethereum address for a given AWS KMS key.)**](https://github.com/tkporter/get-aws-kms-address)
+(6) When you have finished configuring all the .env settings for the chain in which you want to run the validator, type "exit" to log out of the container.
+
+(7) This commando is a test for AWS resources(This outputs an wallet address for a given AWS KMS key.) \*Make sure your current directory is avacus-validator.
+[Reference:https://github.com/tkporter/get-aws-kms-address](https://github.com/tkporter/get-aws-kms-address)
 
 ```
 CHAIN=<chain name> docker compose -f docker-compose-pre.yaml run --rm kms
