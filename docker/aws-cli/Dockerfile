@@ -11,4 +11,4 @@ ENV PATH $PATH:/root/.local/bin
 
 RUN apt-get update && apt-get install -y less vim-gtk nano jq && echo set clipboard=unnamedplus >> ~/.vimrc && mkdir src
 WORKDIR /src
-CMD ["/bin/bash", "/opt/initialize-env.sh.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/initialize-env.sh.sh"]
