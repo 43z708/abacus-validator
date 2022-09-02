@@ -110,7 +110,7 @@ aws cloudformation deploy \
  --stack-name "abacus-<chain name>" \
  --parameter-overrides Chain=<chain name> ValidatorName=<validator name>
 
-# example
+// example
 aws cloudformation deploy \
  --template-file /src/cloudformation.yaml \
  --capabilities CAPABILITY_NAMED_IAM \
@@ -131,7 +131,7 @@ aws cloudformation list-stacks \
 aws cloudformation delete-stack \
  --stack-name "abacus-<chain name>"
 
-# example
+// example
 aws cloudformation delete-stack \
  --stack-name "abacus-ethereum"
 ```
@@ -141,7 +141,7 @@ aws cloudformation delete-stack \
 ```
 chain=<chain name> bash ./setenv.sh
 
-# example
+// example
 chain=ethereum bash ./setenv.sh
 ```
 
@@ -156,7 +156,7 @@ After executing this command, abacus-validator/chain/<chain name>/.env is create
 ```
 vim ./chain/<chain name>/.env
 
-# example
+// example
 vim ./chain/ethereum/.env
 ```
 
@@ -172,7 +172,7 @@ Copy and paste the rpc URL obtained in 1) after ABC_BASE_OUTBOX_CONNECTION_URL=.
 ```
 CHAIN=<chain name> docker compose -f docker-compose-pre.yaml run --rm kms
 
-# example
+// example
 CHAIN=ethereum docker compose -f docker-compose-pre.yaml run --rm kms
 ```
 
@@ -182,7 +182,7 @@ CHAIN=ethereum docker compose -f docker-compose-pre.yaml run --rm kms
 
 ```
 docker compose -f docker-compose-prod.yaml up <chain name> -d
-# example
+// example
 docker compose -f docker-compose-prod.yaml up ethereum -d
 ```
 
@@ -192,16 +192,16 @@ docker compose -f docker-compose-prod.yaml up ethereum -d
 
 ```
 docker compose -f docker-compose-prod.yaml ps
-# or
+// or
 docker compose -f docker-compose-prod.yaml logs ethereum
-# etc...
+// etc...
 ```
 
 (2) Finally, if there are no errors or other problems, try accessing the following URL.
 
 ```
 https://abacus-validator-signatures-<validator name>-<chain name>.s3.<region>.amazonaws.com/checkpoint_latest_index.json
-# example
+// example
 https://abacus-validator-signatures-kiyo-ethereum.s3.eu-central-1.amazonaws.com/checkpoint_latest_index.json
 ```
 
