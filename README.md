@@ -6,6 +6,10 @@ Abacus is an interchain messaging protocol that allows applications to communica
 This repository is designed to make it easy to run Abacus' Validator.
 Official Abacus documentation can be found [here](https://docs.useabacus.network/abacus-docs/validators/getting-started).
 
+## Configuration diagram
+
+![diagram](https://user-images.githubusercontent.com/52235419/188258456-a93d025b-6f52-4ad5-a360-71c409a113a1.jpg)
+
 ## How to install
 
 This repository is configured to run multiple chains of docker containers on a single machine.
@@ -99,9 +103,10 @@ docker compose -f docker-compose-pre.yaml run --rm aws-cli bash
 
 2. **Use cloudformation to create all the AWS resources needed for the validator at once, chain by chain.**
 
-Execute the command with <chain name> being the chain you wish to create, and <validator name> being any name without spaces or special characters.
+Execute the command with `<chain name>` being the chain you wish to create, and `<validator name>` being any name without spaces or special characters.
 
-Currently the chains that can be configured are arbitrum,avalanche,bsc,celo,ethereum,optimism,polygon.(Chain names must be set in all lowercase letters)
+_Currently the `<chain name>` that can be configured are arbitrum,avalanche,bsc,celo,ethereum,optimism,polygon.(Chain names must be set in all lowercase letters)
+_`<validator name>` should be any name without spaces or special characters. Also, please note that the following commands will generate an error if the name is the same as others who use this tool.
 
 ```
 aws cloudformation deploy \
