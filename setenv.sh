@@ -3,8 +3,8 @@ if [ ! -e .exec-once ]; then
 touch .exec-once
 chains=(arbitrum avalanche bsc celo ethereum optimism polygon)
 
-for chain in ${chains[@]}; do
-cp ./chain/$chain/.env.sample ./chain/$chain/.env
+for ch in ${chains[@]}; do
+cp ./chain/$ch/.env.sample ./chain/$ch/.env
 done
 
 fi
