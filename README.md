@@ -259,3 +259,10 @@ If you see the numbers, you have succeeded. Let Abacus management know by postin
 <img width="664" alt="2022-09-03_13h35_00" src="https://user-images.githubusercontent.com/52235419/188595312-35de8f88-12a7-4ee4-9894-0326255746ce.png">
 
 * Finally, if you found this tool helpful, I would appreciate if you could add a Star to the repository.
+
+   
+Abacus Official Link
+Official website: [https://www.useabacus.network/](https://www.useabacus.network/)
+Official Twitter: [https://twitter.com/Abacus_Network](https://twitter.com/Abacus_Network)
+Official Discord: [https://discord.gg/C55J5xHPuA](https://discord.gg/C55J5xHPuA)
+Official Document: [https://docs.useabacus.network/abacus-docs/](https://docs.useabacus.network/abacus-docs/)
