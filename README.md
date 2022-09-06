@@ -263,6 +263,9 @@ If you see the numbers, you have succeeded. Let Abacus management know by postin
    
 Abacus Official Link
 Official website: [https://www.useabacus.network/](https://www.useabacus.network/)
+   
 Official Twitter: [https://twitter.com/Abacus_Network](https://twitter.com/Abacus_Network)
+   
 Official Discord: [https://discord.gg/C55J5xHPuA](https://discord.gg/C55J5xHPuA)
+   
 Official Document: [https://docs.useabacus.network/abacus-docs/](https://docs.useabacus.network/abacus-docs/)
