@@ -3,7 +3,9 @@
 ## Overview
 
 Abacus is an interchain messaging protocol that allows applications to communicate between blockchains.
+
 This repository is designed to make it easy to run Abacus' Validator.
+
 Official Abacus documentation can be found [here](https://docs.useabacus.network/abacus-docs/validators/getting-started).
 
 ## Configuration diagram
@@ -15,14 +17,18 @@ The resources required are as follows.
 - KMS (on AWS)
 A managed service that makes it easy to create and manage keys used for encryption operations, in this case, the creation of a wallet for Validator.
 
+
 - S3 (on AWS)
 Storage service on AWS. It is used to store images, videos, text files, etc. In this case, it serves as a warehouse to store the signatures that Validator has made against the blockchain, and Relayer comes to retrieve the signature data in this warehouse.
+
 
 - IAM (on AWS)
 A service that controls access privileges to services on AWS. In this case, the server running the validator must have permission to operate KMS and S3 onAWS. Therefore, the IAM Access Key Id and Secret access key are stored on the server running the validator. (which must never be leaked to the outside world).
 
+
 - Server to run the Validator (Not needed on AWS)
 You will need a server to run the Validator. This can be a VPS or a local PC, not EC2 on AWS.
+
 
 - AWS Cloudformation (used only with this tool) *Free convenience feature
 AWS Cloudformation (used only with this tool) *Free convenience feature
