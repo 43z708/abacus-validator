@@ -10,7 +10,7 @@ Official Abacus documentation can be found [here](https://docs.useabacus.network
 
 ## Configuration diagram
 
-![diagram](https://user-images.githubusercontent.com/52235419/188258456-a93d025b-6f52-4ad5-a360-71c409a113a1.jpg)
+![configuration-diagram-en drawio](https://user-images.githubusercontent.com/52235419/191190252-1c011c71-b6d6-466d-abbc-61dfe95af3e6.png)
 
 The resources required are as follows.
 
