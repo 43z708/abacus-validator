@@ -1,4 +1,4 @@
-# Unofficial tool to easily build Abacus validator
+# Unofficial tool to easily build Hyperlane(Abacus) validator
 
 ## Overview
 
