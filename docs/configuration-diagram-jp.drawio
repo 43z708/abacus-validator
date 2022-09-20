@@ -1,11 +1,11 @@
-<mxfile modified="2022-09-03T06:13:52.642Z" host="app.diagrams.net" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="kdoNXCuBDjl1IAPt_3Bq" version="20.2.8" type="github">
+<mxfile modified="2022-09-20T06:59:01.476Z" host="app.diagrams.net" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="cSDjd70k4Ok0dloY_0ZA" version="20.2.8" type="github">
   <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
-    <mxGraphModel dx="1303" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="-QjtrjUzRDEMRZ5MF8oH-47" value="Abacus Validator 構成図" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=30;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="52.5" y="90" width="370" height="40" as="geometry" />
+        <mxCell id="-QjtrjUzRDEMRZ5MF8oH-47" value="&lt;span style=&quot;background-color: initial;&quot;&gt;Hyperlane&lt;/span&gt;&amp;nbsp;Validator 構成図" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=30;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="52.5" y="90" width="400" height="40" as="geometry" />
         </mxCell>
         <mxCell id="-QjtrjUzRDEMRZ5MF8oH-48" value="created by kiyo#8414" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=16;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="940" y="114.5" width="180" height="30" as="geometry" />
